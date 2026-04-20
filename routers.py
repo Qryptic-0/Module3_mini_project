@@ -16,8 +16,13 @@ async def create_post(title: str, content: str, background_tasks: BackgroundTask
     new_post = {"title": title, "content": content}
     posts_db.append(new_post)
     
-    # 🏃 BACKGROUND TASK: Don't make the user wait for the email
+    # BACKGROUND TASK: Don't make the user wait for the email
     background_tasks.add_task(send_notification, "admin@blog.com", f"New post: {title}")
     
     return {"message": "Post created!", "post": new_post}
-  
+
+# Add this to your existing routers.py to cover Users too!
+@router.get("/users")
+async def get_users():
+    return [{"username": "builder_01", "role": "admin"}]
+    
