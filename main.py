@@ -1,10 +1,18 @@
 import time
 from fastapi import FastAPI, Request
-from routers import users, posts
+import routers  # Import the routers.py file directly
 
 app = FastAPI(title="Pro Blog API")
 
-# 🛠 MIDDLEWARE: Logs how long each request takes
+# ... middleware stays the same ...
+
+
+app.include_router(routers.router, prefix="/blog", tags=["Blog"])
+
+
+app = FastAPI(title="Pro Blog API")
+
+# MIDDLEWARE: Logs how long each request takes
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
     start_time = time.time()
